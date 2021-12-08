@@ -29,7 +29,7 @@ snippet begin \begin{} ... \end{} block
 # Maketitle
 snippet mkt maketitle
 	\\maketitle
-	
+
 # Tabular
 snippet tab tabular (or arbitrary) environment
 	\\begin{${1:tabular}}{${2:c}}
@@ -187,6 +187,8 @@ snippet itd description \item
 	\\item[${1:description}] ${0:item}
 snippet figure reference to a figure
 	${1:Figure}~\\ref{${2:fig:}}
+snippet equation reference to a equation
+	${1:Equation}~\\ref{${2:eq:}}
 snippet table reference to a table
 	${1:Table}~\\ref{${2:tab:}}
 snippet listing reference to a listing
@@ -205,8 +207,10 @@ snippet citep \citep
 	\\citep{${1}} ${0}
 snippet citet \citet
 	\\citet{${1}} ${0}
-snippet cite \cite[]{}
+snippet citeo \cite[]{}
 	\\cite[${1}]{${2}} ${0}
+snippet cite \cite{}
+	\\cite{${1}} ${0}
 snippet citea \citeauthor
 	\\citeauthor{${1}} ${0}
 snippet citey \citeyear
