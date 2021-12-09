@@ -3,6 +3,9 @@ snipMate & UltiSnip Snippets
 
 [![Build Status](https://travis-ci.org/honza/vim-snippets.svg)](https://travis-ci.org/honza/vim-snippets)
 
+This repository is a fork with modified snippets that work better for me and
+make more sense to me.
+
 This repository contains snippets files for various programming languages.
 
 It is community-maintained and many people have contributed snippet files and
