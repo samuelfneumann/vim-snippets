@@ -47,89 +47,107 @@ Main.@infiltrate
 endsnippet
 
 # Conditionals
-snippet if "if conditional" iA
+snippet if "if conditional" w
 if $1
 	$0
 end
 endsnippet
 
-snippet else "else part of statement" iA
+snippet else "else part of statement" 2
 else
-	${0}
+	$0
 endsnippet
 
-snippet "else if" "else if part of if statement" iA
-else if ${1}
-	${0}
+snippet elif "else if part of if statement" w
+else if $1
+	$0
 endsnippet
 
-snippet ifelse "full if-else statement" iA
-if ${1}
-	${2}
+snippet ifelse "full if-else statement" w
+if $1
+	$2
 else
-	${0}
+	$0
 end
 endsnippet
 
 snippet tern "ternary operator" iA
-${1} ? ${2} : ${3:nothing}
+$1 ? $2 : ${3:nothing}
+endsnippet
+
+snippet iferr "if _ then error" w
+if $1
+	error("$2")
+end
+$0
 endsnippet
 
 # Loops
-snippet for "for loop" iA
+snippet for "for loop" w
+for $1 = $2
+	$0
+end
+endsnippet
+
+snippet forin "for in loop" w
 for $1 ∈ $2
 	$0
 end
 endsnippet
 
-snippet while "while loop"
+snippet while "while loop" w
 while $1
 	$0
 end
 endsnippet
 
 # Error handling
-snippet try "try catch" iA
+snippet try "try catch" w
 try
 	${1:${VISUAL}}
-catch ${2}
-	${0}
+catch $2
+	$0
 end
 endsnippet
 
-snippet fin "finally statement" iA
+snippet fin "finally statement" w
 finally
-	${0}
+	$0
 endsnippet
 
-snippet thr "throw" iA
-throw(${1})
-${0}
+snippet thr "throw" w
+throw($1)
+$0
+endsnippet
+
+snippet err "error" w
+error("$1")
+$0
 endsnippet
 
 # Functions
-snippet func "function definition" iA
-function ${1}(${2})
-	${0}
+snippet func "function definition" w
+function $1($2)
+	$0
 end
 endsnippet
 
-snippet return "return value" iA
+snippet return "return value" w
 return ${1:nothing}
 endsnippet
 
 # Includes
-snippet use "load a package" iA
+snippet use "load a package" w
 using $0
 endsnippet
 
-snippet imp "import package" iA
+snippet imp "import package" w
 import $0
 endsnippet
 
-snippet incl "include source code" iA
-include("${1}")
-${0}
+snippet incl "include source code" w
+include("$1")
+$0
 endsnippet
 
 
