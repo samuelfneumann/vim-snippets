@@ -266,6 +266,41 @@ snippet und "Underline"
 \underline{$1} $0
 endsnippet
 
+# Overline text
+snippet ov "Overline"
+\overline{$1} $0
+endsnippet
+
+# Emphasis text
+snippet emp "Emphasize"
+\emph{$1} $0
+endsnippet
+
+# Small caps
+snippet sc "Small caps"
+\textsc{$1} $0
+endsnippet
+
+# Typewriter (monospaced) text
+snippet tt "Typewriter"
+\texttt{$1} $0
+endsnippet
+
+# Subscript text
+snippet tsub "Subscripted text"
+\textsubscript{$1} $0
+endsnippet
+
+# Superscript text
+snippet tsup "Superscripted text"
+\textsuperscript{$1} $0
+endsnippet
+
+# Footnote text
+snippet ft "Footnote"
+\footnote{$1} $0
+endsnippet
+
 # ######################
 # Custom snippets below
 #
@@ -395,6 +430,32 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 `
 endsnippet
 
+# Math Script Fonts
+priority 90
+context "math()"
+snippet mcal "mathcal" iA
+\mathcal{$1}$0
+endsnippet
+
+priority 90
+context "math()"
+snippet mscr "mathscr"
+\mathscr{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet mcal "mathcal selection"
+\mathcal{${VISUAL}} $0
+endsnippet
+
+priority 100
+context "math()"
+snippet mscr "mathscr selection"
+\mathscr{${VISUAL}} $0
+endsnippet
+
+# Math Symbols
 priority 100
 context "math()"
 snippet ... "ldots" iA
@@ -457,7 +518,7 @@ snippet lr[ "left[ right]" iA
 endsnippet
 
 context "math()"
-snippet lra "leftangle rightangle" iA
+snippet lr< "leftangle rightangle" iA
 \left<${1:${VISUAL}} \right>$0
 endsnippet
 
@@ -533,22 +594,12 @@ R_{${0:t}}$1
 endsnippet
 
 context "math()"
-snippet mcal "mathcal" iA
-\mathcal{$1}$0
-endsnippet
-
-context "math()"
-snippet mscr "mathscr" iA
-\mathscr{$1}$0
-endsnippet
-
-context "math()"
 snippet lll "l" iA
 \ell
 endsnippet
 
 context "math()"
-snippet nab "nabla" iA
+snippet nabla "nabla" iA
 \nabla
 endsnippet
 
@@ -699,7 +750,7 @@ _\text{$1} $0
 endsnippet
 
 context "math()"
-snippet tt "text" iA
+snippet text "text" iA
 \text{$1}$0
 endsnippet
 
@@ -732,6 +783,67 @@ priority 100
 context "math()"
 snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
+endsnippet
+
+# References
+snippet rfig "reference to a figure" iA
+${1:Figure}~\\ref{${2:fig:}} $0
+endsnippet
+snippet req "reference to a equation" iA
+${1:Equation}~\\ref{${2:eq:}} $0
+endsnippet
+
+snippet rtab "reference to a table" iA
+${1:Table}~\\ref{${2:tab:}} $0
+endsnippet
+
+snippet rlist "reference to a listing" iA
+${1:Listing}~\\ref{${2:list}} $0
+endsnippet
+
+snippet rsec "reference to a section" iA
+${1:Section}~\\ref{sec:${2}} $0
+endsnippet
+
+snippet rpage "reference to a page" iA
+	${1:page}~\\pageref{${2}} $0
+endsnippet
+
+#Citations
+snippet citen "citation number" iA
+	\\citen{${1}} $0
+endsnippet
+
+snippet citep* "citation in () all authors" iA
+	\\citep*{${1}} $0
+endsnippet
+
+snippet citep "citation in ()" iA
+	\\citep{${1}} $0
+endsnippet
+
+snippet citet "textual citation" iA
+	\\citet{${1}} $0
+endsnippet
+
+snippet citet* "textual citation all authors" iA
+	\\citet*{${1}} $0
+endsnippet
+
+snippet citeo "citation with options" iA
+	\\cite[${1}][${2}]{${3}} $0
+endsnippet
+
+snippet cite "citation" iA
+	\\cite{${1}} $0
+endsnippet
+
+snippet citea "cite author" iA
+	\\citeauthor{${1}} $0
+endsnippet
+
+snippet citey "citeyear" iA
+	\\citeyear{${1}} $0
 endsnippet
 
 #vim:ft=snippets:
