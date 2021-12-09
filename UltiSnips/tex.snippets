@@ -300,8 +300,11 @@ snippet template "Basic template" b
 \end{document}
 endsnippet
 
+context env("itemize")
+snippet -- "item" wA
+\item
+endsnippet
 
-# Math modes
 # Inline math mode
 snippet im "Math" wA
 $${1}$`!p
@@ -336,22 +339,39 @@ snippet ^ "superscript" iA
 ^{$1}$0
 endsnippet
 
+snippet sqrt "square root" iA
+\sqrt{$1}$0
+endsnippet
+
 # Fractions
+context "math()"
 snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
-
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
-
-# Select text <tab> /
-snippet / "Fraction" iA
+snippet / "Fraction" i
 \\frac{${VISUAL}}{$1}$0
+endsnippet
+
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet '^.*\)/' "() frac" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
 endsnippet
 
 # Sympy block
