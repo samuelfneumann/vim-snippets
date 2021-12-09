@@ -110,4 +110,18 @@ snippet uuid "Random UUID" w
 `!p if not snip.c: import uuid; snip.rv = str(uuid.uuid4())`
 endsnippet
 
+#####################################################################
+# Enclosing Text in Symbols
+#
+# Usage: <word><symbol1><symbol2><tab> generates:
+#	<symbol1><word><symbol2>
+#
+#	where <word> is any combination of non-whitespace characters
+#	Example:
+#
+#####################################################################
+snippet "([^\s]+)([^a-zA-Z])([^a-zA-Z])" "any" ri
+`!p snip.rv=match.group(2)+match.group(1)+match.group(3)`
+endsnippet
+
 # vim:ft=snippets:
