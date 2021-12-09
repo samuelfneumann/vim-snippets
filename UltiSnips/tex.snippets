@@ -385,8 +385,9 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet
 
+context "math()"
 snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
+\\frac{${1:${VISUAL}}}{$2}$0
 endsnippet
 
 context "math()"
@@ -431,28 +432,16 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 endsnippet
 
 # Math Script Fonts
-priority 90
-context "math()"
-snippet mcal "mathcal" iA
-\mathcal{$1}$0
-endsnippet
-
-priority 90
-context "math()"
-snippet mscr "mathscr"
-\mathscr{$1}$0
-endsnippet
-
 priority 100
 context "math()"
 snippet mcal "mathcal selection"
-\mathcal{${VISUAL}} $0
+\mathcal{${1:${VISUAL}}} $0
 endsnippet
 
 priority 100
 context "math()"
 snippet mscr "mathscr selection"
-\mathscr{${VISUAL}} $0
+\mathscr{${1:${VISUAL}}} $0
 endsnippet
 
 # Math Symbols
