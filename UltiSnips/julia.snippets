@@ -1,3 +1,7 @@
+snippet #! "shebang" iA
+#!/usr/bin/env julia
+endsnippet
+
 # Documentation
 snippet docf "function documentation" b
 #' @description
@@ -41,3 +45,91 @@ endsnippet
 snippet inf "Infiltrator breakpoint" b
 Main.@infiltrate
 endsnippet
+
+# Conditionals
+snippet if "if conditional" iA
+if $1
+	$0
+end
+endsnippet
+
+snippet else "else part of statement" iA
+else
+	${0}
+endsnippet
+
+snippet "else if" "else if part of if statement" iA
+else if ${1}
+	${0}
+endsnippet
+
+snippet ifelse "full if-else statement" iA
+if ${1}
+	${2}
+else
+	${0}
+end
+endsnippet
+
+snippet tern "ternary operator" iA
+${1} ? ${2} : ${3:nothing}
+endsnippet
+
+# Loops
+snippet for "for loop" iA
+for $1 ∈ $2
+	$0
+end
+endsnippet
+
+snippet while "while loop"
+while $1
+	$0
+end
+endsnippet
+
+# Error handling
+snippet try "try catch" iA
+try
+	${1:${VISUAL}}
+catch ${2}
+	${0}
+end
+endsnippet
+
+snippet fin "finally statement" iA
+finally
+	${0}
+endsnippet
+
+snippet thr "throw" iA
+throw(${1})
+${0}
+endsnippet
+
+# Functions
+snippet func "function definition" iA
+function ${1}(${2})
+	${0}
+end
+endsnippet
+
+snippet return "return value" iA
+return ${1:nothing}
+endsnippet
+
+# Includes
+snippet use "load a package" iA
+using $0
+endsnippet
+
+snippet imp "import package" iA
+import $0
+endsnippet
+
+snippet incl "include source code" iA
+include("${1}")
+${0}
+endsnippet
+
+
