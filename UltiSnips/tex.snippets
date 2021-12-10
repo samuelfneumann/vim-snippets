@@ -316,6 +316,7 @@ snippet template "Basic template" b
 \usepackage{textcomp}
 \usepackage{amsmath, amssymb}
 \usepackage[mathscr]{euscript}
+\usepackage[margin=1in]{geometry}
 
 
 % figure support
@@ -335,6 +336,25 @@ snippet template "Basic template" b
 	$0
 \end{document}
 endsnippet
+
+snippet "math functions" "Mathematics functions" b
+\usepackage{xparse}
+
+% ============================================================================
+% Additional math functions for symbols etc...
+% ============================================================================
+\ExplSyntaxOn
+% Vector with \vect{x1 x2 x3 ...} for column and \rvect{x1 & x2 & ...}
+\NewDocumentCommand{\vect}{m}
+{
+	\begin{bmatrix}
+	#1
+	\end{bmatrix}
+}
+\ExplSyntaxOff
+% ============================================================================
+endsnippet
+
 
 # Inline math mode
 snippet inm "Math" wA
@@ -365,12 +385,12 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet _ "subscript" iA
+snippet _ "subscript" i
 _{$1}$0
 endsnippet
 
 context "math()"
-snippet ^ "superscript" iA
+snippet ^ "superscript" i
 ^{$1}$0
 endsnippet
 
@@ -434,13 +454,19 @@ endsnippet
 # Math Script Fonts
 priority 100
 context "math()"
-snippet mcal "mathcal selection"
+snippet mbb "mathbb selection" i
+\mathbb{${1:${VISUAL}}} $0
+endsnippet
+
+priority 100
+context "math()"
+snippet mcal "mathcal selection" i
 \mathcal{${1:${VISUAL}}} $0
 endsnippet
 
 priority 100
 context "math()"
-snippet mscr "mathscr selection"
+snippet mscr "mathscr selection" i
 \mathscr{${1:${VISUAL}}} $0
 endsnippet
 
@@ -449,6 +475,26 @@ priority 100
 context "math()"
 snippet ... "ldots" iA
 \ldots
+endsnippet
+
+context "math()"
+snippet ldots "ldots" iA
+\ldots
+endsnippet
+
+context "math()"
+snippet vdots "vdots" iA
+\vdots
+endsnippet
+
+context "math()"
+snippet cdots "cdots" iA
+\cdots
+endsnippet
+
+context "math()"
+snippet ddots "ddots" iA
+\ddots
 endsnippet
 
 context "math()"
@@ -474,6 +520,35 @@ endsnippet
 context "math()"
 snippet != "not equals" iA
 \neq
+endsnippet
+
+context "math()"
+snippet vec "vector overright arrow" i
+\overrightarrow{${1:${VISUAL}}} $0
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z])vec" "vector overright arrow" riA
+\overrightarrow{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
+snippet vect "vector" i
+\vect{${1:${VISUAL}}} $0
+endsnippet
+
+snippet pmat "pmat" iA
+\begin{pmatrix} $1 \end{pmatrix} $0
+endsnippet
+
+snippet bmat "bmat" iA
+\begin{bmatrix} $1 \end{bmatrix} $0
+endsnippet
+
+context "math()"
+snippet trans "transpose" iA
+^{\top}
 endsnippet
 
 context "math()"
@@ -513,7 +588,7 @@ endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{t=${1:1}}^{${2:\infty}} ${3:\gamma^{t} R_t}
+\sum_{${1:t=1}}^{${2:\infty}} ${3:\gamma^{t} R_t}
 endsnippet
 
 context "math()"
@@ -632,6 +707,10 @@ snippet -> "to" iA
 \to
 endsnippet
 
+snippet to "to" w
+\to
+endsnippet
+
 priority 200
 context "math()"
 snippet <-> "leftrightarrow" iA
@@ -669,12 +748,12 @@ snippet || "mid" iA
 endsnippet
 
 context "math()"
-snippet notin "not in " iA
+snippet notin "not in" iA
 \notin
 endsnippet
 
 context "math()"
-snippet inn "in " iA
+snippet in "in" iA
 \in
 endsnippet
 
@@ -719,17 +798,22 @@ snippet NN "natural" iA
 endsnippet
 
 context "math()"
+snippet EE "expected" iA
+\mathbb{E}[$1] $0
+endsnippet
+
+context "math()"
 snippet SS "state space" iA
 \mathscr{S}
 endsnippet
 
 context "math()"
-snippet AA "action space" iA
+snippet AS "action space" iA
 \mathscr{A}
 endsnippet
 
 context "math()"
-snippet RR "reward space" iA
+snippet RS "reward space" iA
 \mathscr{R}
 endsnippet
 
@@ -774,28 +858,64 @@ snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
 
+context "math()"
+snippet "\((.)" "sample in batch" ri
+^{(`!p snip.rv=match.group(1)`)}
+endsnippet
+
+context "math()"
+snippet "\_(.)" "index" ri
+_{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "\^(.)" "power" ri
+^{`!p snip.rv=match.group(1)`}
+endsnippet
+
+
 # References
 snippet rfig "reference to a figure" iA
-${1:Figure}~\\ref{${2:fig:}} $0
+${1:Figure}~\\ref{fig:$2} $0
 endsnippet
 snippet req "reference to a equation" iA
-${1:Equation}~\\ref{${2:eq:}} $0
+${1:Equation}~\\ref{eqn:$2} $0
 endsnippet
 
 snippet rtab "reference to a table" iA
-${1:Table}~\\ref{${2:tab:}} $0
+${1:Table}~\\ref{tab:$2} $0
 endsnippet
 
 snippet rlist "reference to a listing" iA
-${1:Listing}~\\ref{${2:list}} $0
+${1:Listing}~\\ref{list:$2} $0
 endsnippet
 
 snippet rsec "reference to a section" iA
-${1:Section}~\\ref{sec:${2}} $0
+${1:Section}~\\ref{sec:$2} $0
 endsnippet
 
 snippet rpage "reference to a page" iA
-	${1:page}~\\pageref{${2}} $0
+${1:Page}~\\pageref{$2} $0
+endsnippet
+
+snippet ref "generic reference" i
+$1~\\ref{$2} $0
+endsnippet
+
+snippet leq "equation label" iA
+\label{eqn:$1} $0
+endsnippet
+
+snippet lfig "figure label" iA
+\label{fig:$1} $0
+endsnippet
+
+snippet ltab "table label" iA
+\label{tab:$1} $0
+endsnippet
+
+snippet lsec "section label" iA
+\label{sec:$1} $0
 endsnippet
 
 #Citations
