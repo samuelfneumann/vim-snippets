@@ -117,12 +117,18 @@ endsnippet
 
 # Functions
 snippet func "function definition" w
-function $1($2)${3:::}
+function $1($2)
 	$0
 end
 endsnippet
 
-snippet return "return value" wA
+snippet func:: "function definition" w
+function $1(${2:args...})::${3:Any}
+	$0
+end
+endsnippet
+
+snippet return "return value" w
 return ${1:nothing}
 endsnippet
 
@@ -140,7 +146,7 @@ include("$1") $0
 endsnippet
 
 # Module snippets
-snippet mod "module" wA
+snippet mod "module" w
 module $1
 $0
 end
@@ -170,5 +176,35 @@ endsnippet
 
 snippet size "size" w
 size(${1:${VISUAL}})$0
+endsnippet
+
+# Press <tab> at end of function to insert docstring
+snippet "function (.*)$" "docstring" ri
+"""
+`!p
+text = match.group(1).split(",")
+
+out = ""
+found = False
+added = False
+for i, word in enumerate(text):
+    if "=" in word:
+            found = True
+    if found and not added:
+            added = True
+            out += "["
+
+	if i != 0:
+		out += "," + word
+	else:
+		out += word
+if added:
+	out = out[:-1] + "])"
+
+snip.rv = "\t" + out
+
+${0:DESCRIPTION}
+"""
+function `!p snip.rv=match.group(1)`
 endsnippet
 
