@@ -63,14 +63,6 @@ else if $1
 	$0
 endsnippet
 
-snippet ifelse "full if-else statement" w
-if $1
-	$2
-else
-	$0
-end
-endsnippet
-
 snippet tern "ternary operator" iA
 $1 ? $2 : ${3:nothing}
 endsnippet
@@ -84,19 +76,19 @@ endsnippet
 
 # Loops
 snippet for "for loop" w
-for $1 = $2
+for ${1:i} = ${2:i:}${3:end}
 	$0
 end
 endsnippet
 
 snippet forin "for in loop" w
-for $1 ∈ $2
+for ${1:i} ∈ ${2:container}
 	$0
 end
 endsnippet
 
-snippet while "while loop" w
-while $1
+snippet wh "while loop" w
+while $1 ${2:<=} $3
 	$0
 end
 endsnippet
@@ -127,7 +119,7 @@ endsnippet
 
 # Functions
 snippet func "function definition" w
-function $1($2)
+function $1($2)${3:::}
 	$0
 end
 endsnippet
@@ -155,3 +147,31 @@ snippet mod "module" wA
 module $1
 $0
 end
+endsnippet
+
+# Type snippets
+snippet struct "structure" wA
+struct $1
+	$2
+end
+$0
+endsnippet
+
+snippet abstract "abstract type" wA
+abstract type $1 end
+$0
+endsnippet
+
+# Random functions
+snippet len "length" wA
+length(${1:${VISUAL}})$0
+endsnippet
+
+snippet println "println" wA
+println(${1:${VISUAL}})$0
+endsnippet
+
+snippet size "size" wA
+size(${1:${VISUAL}})$0
+endsnippet
+
