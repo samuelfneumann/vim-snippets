@@ -4,182 +4,8 @@ endsnippet
 
 # Documentation
 snippet docf "function documentation" b
-#' @description
-#'
-#' ${1:function description}
-#'
-#' ${2:@param ${3:name}::${4:Type} ${5:Description}}
-#'
-#' ${6:@returns ${7:name}::${8:Type} ${9:Description}}
-#'
-#' @examples
-#'
-#' ${10: function call examples}
-endsnippet
-
-snippet doct "type definition" b
-#' @description
-#'
-#' ${1:type description}
-#'
-#' ${2:@field ${3:name}::${4:Type} ${5:Description}}
-#'
-#' @examples
-#'
-#' ${10: constructor examples}
-endsnippet
-
-snippet par "function parameter documentation" b
-#' @param ${1:name}::${2:Type} ${0:Description}
-endsnippet
-
-snippet fld "type field documentation" b
-#' @field ${1:name}::${2:Type} ${0:Description}
-endsnippet
-
-# Debugging
-snippet deb "Debugger breakpoint" b
-Main.@bp
-endsnippet
-
-snippet inf "Infiltrator breakpoint" b
-Main.@infiltrate
-endsnippet
-
-# Conditionals
-snippet if "if conditional" w
-if ${1:${VISUAL}}
-	$0
-end
-endsnippet
-
-snippet else "else part of statement" 2
-else
-	$0
-endsnippet
-
-snippet elif "else if part of if statement" w
-else if ${1:${VISUAL}}
-	$0
-endsnippet
-
-snippet tern "ternary operator" iA
-${1:${VISUAL}} ? $2 : ${3:nothing}
-endsnippet
-
-snippet iferr "if _ then error" w
-if ${1:${VISUAL}}
-	error("$2")
-end
-$0
-endsnippet
-
-# Loops
-snippet for "for loop" w
-for ${1:i} = ${2:i:}${3:end}
-	$0
-end
-endsnippet
-
-snippet forin "for in loop" w
-for ${1:i} ∈ ${2:container}
-	$0
-end
-endsnippet
-
-snippet wh "while loop" w
-while ${1:${VISUAL}}
-	$0
-end
-endsnippet
-
-# Error handling
-snippet try "try catch" w
-try
-	${1:${VISUAL}}
-catch $2
-	$0
-end
-endsnippet
-
-snippet fin "finally statement" w
-finally
-	$0
-endsnippet
-
-snippet thr "throw" w
-throw($1) $0
-endsnippet
-
-snippet err "error" w
-error("$1") $0
-endsnippet
-
-# Functions
-snippet func "function definition" w
-function $1($2)
-	$0
-end
-endsnippet
-
-snippet func:: "function definition" w
-function $1(${2:args...})::${3:Any}
-	$0
-end
-endsnippet
-
-snippet return "return value" w
-return ${1:nothing}
-endsnippet
-
-# Includes
-snippet use "load a package" w
-using $0
-endsnippet
-
-snippet imp "import package" w
-import $0
-endsnippet
-
-snippet incl "include source code" w
-include("$1") $0
-endsnippet
-
-# Module snippets
-snippet mod "module" w
-module $1
-$0
-end
-endsnippet
-
-# Type snippets
-snippet struct "structure" wA
-struct $1
-	$2
-end
-$0
-endsnippet
-
-snippet abstract "abstract type" wA
-abstract type $1 end
-$0
-endsnippet
-
-# Random functions
-snippet len "length" w
-length(${1:${VISUAL}})$0
-endsnippet
-
-snippet println "println" w
-println(${1:${VISUAL}})$0
-endsnippet
-
-snippet size "size" w
-size(${1:${VISUAL}})$0
-endsnippet
-
 # Press <tab> at end of function to insert docstring
-snippet "function (.*)$" "docstring" ri
+snippet "function (.*)$" "function docstring" ri
 """
 `!p
 text = match.group(1).split(",")
@@ -201,10 +27,165 @@ for i, word in enumerate(text):
 if added:
 	out = out[:-1] + "])"
 
-snip.rv = "\t" + out
-
-${0:DESCRIPTION}
+snip.rv = "\t" + out + "\n"
+`
+${1:description}
 """
 function `!p snip.rv=match.group(1)`
+endsnippet
+
+# Press <tab> at end of module or struct to insert docstring
+snippet "(struct|module) (.*)$" "struct docstring" ri
+"""
+`!p
+snip.rv = "\t" + match.group(2)
+`
+
+${1:description}
+"""
+`!p snip.rv=match.group(1) + " " + match.group(2)`
+endsnippet
+
+
+# Ignore some snippets in comments
+priority 100
+snippet "(#.*(struct|abstract|len|size|if|else|elif|try|finally|thr|err|for|while|func|mod|tern|iferr|use|imp|incl|return))" "ignore if snippet in comment" riA
+`!p
+snip.rv=match.group(1)
+`
+endsnippet
+
+# Conditionals
+priority 50
+snippet if "if conditional" wA
+if ${1:${VISUAL:condition}}
+	$0
+end
+endsnippet
+
+priority 50
+snippet else "else part of statement" wA
+else
+	$0
+endsnippet
+
+snippet elif "else if part of if statement" wA
+else if ${1:${VISUAL:condition}}
+	$0
+endsnippet
+
+snippet tern "ternary operator" iA
+${1:${VISUAL:condition}} ? $2 : ${3:nothing}
+endsnippet
+
+snippet iferr "if _ then error" wA
+if ${1:${VISUAL:condition}}
+	error("${2:error_msg}")
+end
+$0
+endsnippet
+
+# Loops
+snippet for "for loop" wA
+for ${1:i} = ${2:1:}${3:end}
+	$0
+end
+endsnippet
+
+snippet forin "for in loop" wA
+for ${1:i} ∈ ${2:container}
+	$0
+end
+endsnippet
+
+snippet wh "while loop" wA
+while ${1:${VISUAL:condition}}
+	$0
+end
+endsnippet
+
+# Error handling
+snippet try "try catch" wA
+try
+	${1:${VISUAL}}
+catch ${2:exception}}
+	$0
+end
+endsnippet
+
+snippet fin "finally statement" wA
+finally
+	$0
+endsnippet
+
+snippet thr "throw" wA
+throw($1) $0
+endsnippet
+
+snippet err "error" wA
+error("${1:${VISUAL:error_msg}}") $0
+endsnippet
+
+# Functions
+snippet func "function definition" wA
+function ${1:${VISUAL:name}}(${2:args...})
+	$0
+end
+endsnippet
+
+snippet func:: "function definition" wA
+function ${1:${VISUAL}}(${2:args...})::${3:Any}
+	$0
+end
+endsnippet
+
+snippet return "return value" wA
+return ${1:nothing}
+endsnippet
+
+# Includes
+snippet use "load a package" wA
+using $0
+endsnippet
+
+snippet imp "import package" wA
+import $0
+endsnippet
+
+snippet incl "include source code" wA
+include("$1") $0
+endsnippet
+
+# Module snippets
+snippet mod "module" wA
+module $1
+$0
+end
+endsnippet
+
+# Type snippets
+snippet struct "structure" wA
+struct $1
+	$2
+end
+$0
+endsnippet
+
+snippet abstract "abstract type" wA
+abstract type $1 end
+$0
+endsnippet
+
+# Random functions
+snippet len "length" wA
+length(${1:${VISUAL}})$0
+endsnippet
+
+snippet println "println" wA
+println(${1:${VISUAL}})$0
+endsnippet
+
+snippet size "size" wA
+size(${1:${VISUAL}})$0
 endsnippet
 
