@@ -49,7 +49,7 @@ endsnippet
 
 # Ignore some snippets in comments
 priority 100
-snippet "(#.*(struct|abstract|len|size|if|else|elif|try|finally|thr|err|for|while|func|mod|tern|iferr|use|imp|incl|return))" "ignore if snippet in comment" riA
+snippet "(#.*(struct|abstract|len|size|if|else|elif|try|finally|thr|err|for|wh|func|mod|tern|iferr|use|imp|incl|return))" "ignore if snippet in comment" riA
 `!p
 snip.rv=match.group(1)
 `
@@ -174,18 +174,5 @@ endsnippet
 snippet abstract "abstract type" wA
 abstract type $1 end
 $0
-endsnippet
-
-# Random functions
-snippet len "length" wA
-length(${1:${VISUAL}})$0
-endsnippet
-
-snippet println "println" wA
-println(${1:${VISUAL}})$0
-endsnippet
-
-snippet size "size" wA
-size(${1:${VISUAL}})$0
 endsnippet
 
