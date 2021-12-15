@@ -18,42 +18,49 @@ vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
 no sea takimata sanctus est Lorem ipsum dolor sit amet.
 """
 
-def matchp(text):
+"""
+matchp_closing matches closing parentheses by appening opening parentheses to
+the beginning of text
+"""
+def matchp_closing(text, open_="(", closed=")"):
     new = ""
     stack = []
     for i in range(len(text)-1, -1, -1):
         new = text[i] + new
-        if text[i] == ")":
-            stack.append(")")
-        if text[i] == "(":
+        if text[i] == closed:
+            stack.append(closed)
+        if text[i] == open_:
             if len(stack) == 0:
                 # Erroneous closing bracket that cannot be reconciled
                 return text
 
-            if stack[-1] == ")":
+            if stack[-1] == closed:
                 stack.pop()
             else:
-                new = "(" + new
-    return "(" * len(stack) + new
+                new = open_ + new
+    return open_ * len(stack) + new
 
-
-def matchpf(text):
+"""
+matchp_opening matches opening parentheses by appening closing parentheses to
+the end of text
+"""
+def matchp_opening(text, open_="(", closed=")"):
     new = ""
     stack = []
     for i in range(0, len(text)):
         new = new + text[i]
-        if text[i] == "(":
-            stack.append("(")
-        if text[i] == ")":
+        if text[i] == open_:
+            stack.append(open_)
+        if text[i] == closed:
             if len(stack) == 0:
                 # Erroneous opening bracket that cannot be reconciled
                 continue
 
-            if stack[-1] == "(":
+            if stack[-1] == open_:
                 stack.pop()
             else:
-                new = ")" + new
-    return new + ")" * len(stack)
+                new = closed + new
+    return new + closed * len(stack)
 
 
 
@@ -182,48 +189,42 @@ endsnippet
 priority 50
 snippet "(^|\s)(\([^\s]+)" "match opening parentheses" ri
 `!p snip.rv=match.group(1)``!p
-# text = match.group(2)
-# new = ""
-# stack = []
-# for i in range(0, len(text)):
-#     new = new + text[i]
-#     if text[i] == "(":
-#         stack.append("(")
-#     if text[i] == ")":
-#         if len(stack) == 0:
-#             # Erroneous opening bracket that cannot be reconciled
-#             continue
-
-#         if stack[-1] == "(":
-#             stack.pop()
-#         else:
-#             new = ")" + new
-# snip.rv = new + ")" * len(stack)
-snip.rv = matchp(matchpf(match.group(2)))
+snip.rv = matchp_closing(matchp_opening(match.group(2)))
 ` $0
 endsnippet
 
 priority 51
 snippet "(^|\s)([^\s]+\))" "match closing parentheses" ri
 `!p snip.rv=match.group(1)``!p
-# text = match.group(2)
-# new = ""
-# stack = []
-# for i in range(len(text)-1, -1, -1):
-#     new = text[i] + new
-#     if text[i] == ")":
-#         stack.append(")")
-#     if text[i] == "(":
-#         if len(stack) == 0:
-#             # Erroneous closing bracket that cannot be reconciled
-#             continue
+snip.rv = matchp_opening(matchp_closing(match.group(2)))
+` $0
+endsnippet
 
-#         if stack[-1] == ")":
-#             stack.pop()
-#         else:
-#             new = "(" + new
-# snip.rv = "(" * len(stack) + new
-snip.rv = matchpf(matchp(match.group(2)))
+priority 50
+snippet "(^|\s)(\{[^\s]+)" "match opening brace" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_closing(matchp_opening(match.group(2), "{", "}"), "{", "}")
+` $0
+endsnippet
+
+priority 51
+snippet "(^|\s)([^\s]+\})" "match closing brace" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_opening(matchp_closing(match.group(2), "{", "}"), "{", "}")
+` $0
+endsnippet
+
+priority 50
+snippet "(^|\s)(\[[^\s]+)" "match opening bracket" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_closing(matchp_opening(match.group(2), "[", "]"), "[", "]")
+` $0
+endsnippet
+
+priority 51
+snippet "(^|\s)([^\s]+\])" "match closing bracket" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_opening(matchp_closing(match.group(2), "[", "]"), "[", "]")
 ` $0
 endsnippet
 
