@@ -179,6 +179,7 @@ endsnippet
 # #
 # #	where <word> is any combination of non-whitespace characters
 # #
+# # Only use this snippet or the one above, not both
 # #####################################################################
 # priority 100
 # snippet "([^a-zA-Z])([^a-zA-Z])" "test" ri
@@ -186,6 +187,7 @@ endsnippet
 # endsnippet
 
 # <tab> to match all brackets, parentheses, or braces
+# Better method uses a stack of (, [, and {
 priority 60
 snippet "(^|\s)([\{\[\(][^\s]+)" "match opening" ri
 `!p snip.rv=match.group(1)``!p
@@ -193,7 +195,7 @@ text = match.group(2)
 text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
 text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
 snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
-` $0
+`$0
 endsnippet
 
 priority 61
@@ -203,7 +205,17 @@ text = match.group(2)
 text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
 text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
 snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
-` $0
+`$0
 endsnippet
+
+# priority -500
+# snippet "([a-zA-Z]+)" "enclose selection in parentheses" ri
+# `!p
+# if snip.v.text != "":
+#     snip.rv = match.group(1) + "(" + snip.v.text + ")"
+# else:
+#     snip.rv = match.group(1)
+# `$0
+# endsnippet
 
 # vim:ft=snippets:
