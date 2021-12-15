@@ -166,7 +166,7 @@ endsnippet
 #	where <word> is any combination of non-whitespace characters
 #
 #####################################################################
-priority 50
+priority 100
 snippet "([^\s]+) ([^a-zA-Z\s])([^a-zA-Z\s])" "any" ri
 `!p snip.rv=match.group(2)+match.group(1)+match.group(3)`
 endsnippet
@@ -185,48 +185,25 @@ endsnippet
 # `!p snip.rv=match.group(1)`${1:${VISUAL}}`!p snip.rv=match.group(2)`$0
 # endsnippet
 
-# <tab> to add beginning or ending parenthesis
-priority 50
-snippet "(^|\s)([^\s]*\([^\s\[\{]+)" "match opening parentheses" ri
+# <tab> to match all brackets, parentheses, or braces
+priority 60
+snippet "(^|\s)([\{\[\(][^\s]+)" "match opening" ri
 `!p snip.rv=match.group(1)``!p
-snip.rv = matchp_closing(matchp_opening(match.group(2)))
+text = match.group(2)
+text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
+text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
+snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
 ` $0
 endsnippet
 
-priority 51
-snippet "(^|\s)([^\s]+\))" "match closing parentheses" ri
+priority 61
+snippet "(^|\s)([^\s]+[\}\]\)])" "match closing" ri
 `!p snip.rv=match.group(1)``!p
-snip.rv = matchp_opening(matchp_closing(match.group(2)))
+text = match.group(2)
+text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
+text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
+snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
 ` $0
 endsnippet
-
-priority 50
-snippet "(^|\s)([^\s]*\[[^\s\(\{]+)" "match opening bracket" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_closing(matchp_opening(match.group(2), "[", "]"), "[", "]")
-` $0
-endsnippet
-
-priority 51
-snippet "(^|\s)([^\s]+\])" "match closing bracket" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_opening(matchp_closing(match.group(2), "[", "]"), "[", "]")
-` $0
-endsnippet
-
-priority 50
-snippet "(^|\s)([^\s]*\{[^\s\(\[]+)" "match opening brace" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_closing(matchp_opening(match.group(2), "{", "}"), "{", "}")
-` $0
-endsnippet
-
-priority 51
-snippet "(^|\s)([^\s]+\})" "match closing brace" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_opening(matchp_closing(match.group(2), "{", "}"), "{", "}")
-` $0
-endsnippet
-
 
 # vim:ft=snippets:
