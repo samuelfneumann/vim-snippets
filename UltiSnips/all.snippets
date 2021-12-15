@@ -187,7 +187,7 @@ endsnippet
 
 # <tab> to add beginning or ending parenthesis
 priority 50
-snippet "(^|\s)(\([^\s]+)" "match opening parentheses" ri
+snippet "(^|\s)([^\s]*\([^\s\[\{]+)" "match opening parentheses" ri
 `!p snip.rv=match.group(1)``!p
 snip.rv = matchp_closing(matchp_opening(match.group(2)))
 ` $0
@@ -201,7 +201,21 @@ snip.rv = matchp_opening(matchp_closing(match.group(2)))
 endsnippet
 
 priority 50
-snippet "(^|\s)(\{[^\s]+)" "match opening brace" ri
+snippet "(^|\s)([^\s]*\[[^\s\(\{]+)" "match opening bracket" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_closing(matchp_opening(match.group(2), "[", "]"), "[", "]")
+` $0
+endsnippet
+
+priority 51
+snippet "(^|\s)([^\s]+\])" "match closing bracket" ri
+`!p snip.rv=match.group(1)``!p
+snip.rv = matchp_opening(matchp_closing(match.group(2), "[", "]"), "[", "]")
+` $0
+endsnippet
+
+priority 50
+snippet "(^|\s)([^\s]*\{[^\s\(\[]+)" "match opening brace" ri
 `!p snip.rv=match.group(1)``!p
 snip.rv = matchp_closing(matchp_opening(match.group(2), "{", "}"), "{", "}")
 ` $0
@@ -214,18 +228,5 @@ snip.rv = matchp_opening(matchp_closing(match.group(2), "{", "}"), "{", "}")
 ` $0
 endsnippet
 
-priority 50
-snippet "(^|\s)(\[[^\s]+)" "match opening bracket" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_closing(matchp_opening(match.group(2), "[", "]"), "[", "]")
-` $0
-endsnippet
-
-priority 51
-snippet "(^|\s)([^\s]+\])" "match closing bracket" ri
-`!p snip.rv=match.group(1)``!p
-snip.rv = matchp_opening(matchp_closing(match.group(2), "[", "]"), "[", "]")
-` $0
-endsnippet
 
 # vim:ft=snippets:
