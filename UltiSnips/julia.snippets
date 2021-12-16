@@ -57,19 +57,19 @@ endsnippet
 
 # Conditionals
 priority 50
-snippet if "if conditional" wA
+snippet if "if conditional" A
 if ${1:${VISUAL:condition}}
 	$0
 end
 endsnippet
 
 priority 50
-snippet else "else part of statement" wA
+snippet else "else part of statement" A
 else
 	$0
 endsnippet
 
-snippet elif "else if part of if statement" wA
+snippet elif "else if part of if statement" A
 else if ${1:${VISUAL:condition}}
 	$0
 endsnippet
@@ -78,7 +78,7 @@ snippet tern "ternary operator" iA
 ${1:${VISUAL:condition}} ? $2 : ${3:nothing}
 endsnippet
 
-snippet iferr "if _ then error" wA
+snippet iferr "if _ then error" A
 if ${1:${VISUAL:condition}}
 	error("${2:error_msg}")
 end
@@ -86,26 +86,26 @@ $0
 endsnippet
 
 # Loops
-snippet for "for loop" wA
+snippet for "for loop" A
 for ${1:i} = ${2:1:}${3:end}
 	$0
 end
 endsnippet
 
-snippet forin "for in loop" wA
+snippet forin "for in loop" A
 for ${1:i} ∈ ${2:container}
 	$0
 end
 endsnippet
 
-snippet wh "while loop" wA
+snippet while "while loop" A
 while ${1:${VISUAL:condition}}
 	$0
 end
 endsnippet
 
 # Error handling
-snippet try "try catch" wA
+snippet try "try catch" A
 try
 	${1:${VISUAL}}
 catch ${2:exception}}
@@ -113,65 +113,65 @@ catch ${2:exception}}
 end
 endsnippet
 
-snippet fin "finally statement" wA
+snippet fin "finally statement" A
 finally
 	$0
 endsnippet
 
-snippet thr "throw" wA
+snippet thr "throw" A
 throw($1) $0
 endsnippet
 
-snippet err "error" wA
+snippet err "error" A
 error("${1:${VISUAL:error_msg}}") $0
 endsnippet
 
 # Functions
-snippet func "function definition" wA
+snippet func "function definition" A
 function ${1:${VISUAL:name}}(${2:args...})
 	$0
 end
 endsnippet
 
-snippet func:: "function definition" wA
+snippet func:: "function definition" A
 function ${1:${VISUAL}}(${2:args...})::${3:Any}
 	$0
 end
 endsnippet
 
-snippet return "return value" wA
+snippet return "return value" A
 return ${1:${VISUAL:nothing}}
 endsnippet
 
 # Includes
-snippet use "load a package" wA
+snippet use "load a package" A
 using $0
 endsnippet
 
-snippet imp "import package" wA
+snippet imp "import package" A
 import $0
 endsnippet
 
-snippet incl "include source code" wA
+snippet incl "include source code" A
 include("$1") $0
 endsnippet
 
 # Module snippets
-snippet mod "module" wA
+snippet mod "module" A
 module $1
 $0
 end
 endsnippet
 
 # Type snippets
-snippet struct "structure" wA
+snippet struct "structure" A
 struct $1
 	$2
 end
 $0
 endsnippet
 
-snippet abstract "abstract type" wA
+snippet abstract "abstract type" A
 abstract type $1 end
 $0
 endsnippet
