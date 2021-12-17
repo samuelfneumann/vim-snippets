@@ -157,6 +157,7 @@ snippet uuid "Random UUID" w
 `!p if not snip.c: import uuid; snip.rv = str(uuid.uuid4())`
 endsnippet
 
+
 #####################################################################
 # Enclosing Text in Symbols
 #
@@ -186,6 +187,7 @@ endsnippet
 # `!p snip.rv=match.group(1)`${1:${VISUAL}}`!p snip.rv=match.group(2)`$0
 # endsnippet
 
+
 # <tab> to match all brackets, parentheses, or braces
 # Better method uses a stack of (, [, and {
 priority 60
@@ -208,6 +210,10 @@ snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
 `$0
 endsnippet
 
+
+# This clashes with "jumping between snippets $1, $2, ...", so we need to get
+# around that or remap the jump to next part key from <tab> to <leader><tab>
+#
 # priority -500
 # snippet "([a-zA-Z]+)" "enclose selection in parentheses" ri
 # `!p
