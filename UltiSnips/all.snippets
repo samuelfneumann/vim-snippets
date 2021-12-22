@@ -188,27 +188,27 @@ endsnippet
 # endsnippet
 
 
-# <tab> to match all brackets, parentheses, or braces
-# Better method uses a stack of (, [, and {
-priority 60
-snippet "(^|\s)([\{\[\(][^\s]+)" "match opening" ri
-`!p snip.rv=match.group(1)``!p
-text = match.group(2)
-text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
-text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
-snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
-`$0
-endsnippet
+# # <tab> to match all brackets, parentheses, or braces
+# # Better method uses a stack of (, [, and {
+# priority 60
+# snippet "(^|\s)([\{\[\(][^\s]+)" "match opening" ri
+# `!p snip.rv=match.group(1)``!p
+# text = match.group(2)
+# text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
+# text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
+# snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
+# `$0
+# endsnippet
 
-priority 61
-snippet "(^|\s)([^\s]+[\}\]\)])" "match closing" ri
-`!p snip.rv=match.group(1)``!p
-text = match.group(2)
-text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
-text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
-snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
-`$0
-endsnippet
+# priority 61
+# snippet "(^|\s)([^\s]+[\}\]\)])" "match closing" ri
+# `!p snip.rv=match.group(1)``!p
+# text = match.group(2)
+# text = matchp_opening(matchp_closing(text, "(", ")"), "(", ")")
+# text = matchp_opening(matchp_closing(text, "[", "]"), "[", "]")
+# snip.rv = matchp_opening(matchp_closing(text, "{", "}"), "{", "}")
+# `$0
+# endsnippet
 
 
 # This clashes with "jumping between snippets $1, $2, ...", so we need to get
