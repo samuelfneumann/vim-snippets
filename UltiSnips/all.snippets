@@ -167,7 +167,7 @@ endsnippet
 #	where <word> is any combination of non-whitespace characters
 #
 #####################################################################
-priority 100
+priority -10
 snippet "([^\s]+) ([^a-zA-Z\s])([^a-zA-Z\s])" "any" ri
 `!p snip.rv=match.group(2)+match.group(1)+match.group(3)`
 endsnippet

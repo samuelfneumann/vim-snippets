@@ -588,12 +588,12 @@ endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{${1:t=1}}^{${2:\infty}} ${3:\gamma^{t} R_t}
+\sum_{${1:t=0}}^{${2:\infty}} ${3:\gamma^{t} R_{t+1}}
 endsnippet
 
 context "math()"
 snippet suml "sum limits" w
-\sum\limits_{t=${1:1}}^{${2:\infty}} ${3:\gamma^{t} R_t}
+\sum\limits_{t=${1:0}}^{${2:\infty}} ${3:\gamma^{t} R_{t+1}}
 endsnippet
 
 context "math()"
@@ -618,12 +618,12 @@ endsnippet
 
 context "math()"
 context "math()"
-snippet EE "geq" iA
+snippet TE "there exists" iA
 \exists
 endsnippet
 
 context "math()"
-snippet AA "forall" iA
+snippet FA "for all" iA
 \forall
 endsnippet
 
@@ -753,7 +753,7 @@ snippet notin "not in" iA
 endsnippet
 
 context "math()"
-snippet in "in" iA
+snippet in "in" wA
 \in
 endsnippet
 
@@ -798,8 +798,15 @@ snippet NN "natural" iA
 endsnippet
 
 context "math()"
+priority 50
 snippet EE "expected" iA
 \mathbb{E}[$1] $0
+endsnippet
+
+context "math()"
+priority 51
+snippet _EE "expected" iA
+\mathbb{E}_{$1}[$2] $0
 endsnippet
 
 context "math()"
@@ -919,39 +926,39 @@ snippet lsec "section label" iA
 endsnippet
 
 #Citations
-snippet citen "citation number" iA
+snippet citen "citation number" w
 	\\citen{${1}} $0
 endsnippet
 
-snippet citep* "citation in () all authors" iA
+snippet citep* "citation in () all authors" w
 	\\citep*{${1}} $0
 endsnippet
 
-snippet citep "citation in ()" iA
+snippet citep "citation in ()" w
 	\\citep{${1}} $0
 endsnippet
 
-snippet citet "textual citation" iA
+snippet citet "textual citation" w
 	\\citet{${1}} $0
 endsnippet
 
-snippet citet* "textual citation all authors" iA
+snippet citet* "textual citation all authors" w
 	\\citet*{${1}} $0
 endsnippet
 
-snippet citeo "citation with options" iA
+snippet citeo "citation with options" w
 	\\cite[${1}][${2}]{${3}} $0
 endsnippet
 
-snippet cite "citation" iA
+snippet cite "citation" w
 	\\cite{${1}} $0
 endsnippet
 
-snippet citea "cite author" iA
+snippet citea "cite author" w
 	\\citeauthor{${1}} $0
 endsnippet
 
-snippet citey "citeyear" iA
+snippet citey "citeyear" w
 	\\citeyear{${1}} $0
 endsnippet
 
