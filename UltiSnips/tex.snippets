@@ -697,7 +697,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rwA
+snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|alpha|beta|gamma|delta|epsilon|varepsilon|theta|eta|zeta|iota|kappa|lambda|mu|nu|psi|omicron|pi|rho|sigma|varsigma|tau|upsilon|phi|xi|chi|omega|int)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -903,6 +903,10 @@ endsnippet
 
 snippet rpage "reference to a page" iA
 ${1:Page}~\\pageref{$2} $0
+endsnippet
+
+snippet ralg "reference to an algorithm" iA
+${1:Algorithm}~\\pageref{$2} $0
 endsnippet
 
 snippet ref "generic reference" i
