@@ -683,22 +683,28 @@ snippet norm "norm" iA
 \|$1\|$0
 endsnippet
 
+priority 50
+context "math()"
+snippet '(?<![a-zA-Z\\])(psi)' "ln" rw
+\\`!p snip.rv = match.group(1)` $0
+endsnippet
+
 priority 100
 context "math()"
-snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rwA
-\\`!p snip.rv = match.group(1)`
+snippet '(?<![a-zA-Z\\])(sin|cos|arccot|cot|csc|ln|log|exp|star|perp|alpha|beta|gamma|delta|epsilon|theta|eta|zeta|iota|kappa|lambda|mu|nu|omicron|pi|rho|sigma|tau|upsilon|phi|xi|chi|omega)' "ln" rw
+\\`!p snip.rv = match.group(1)` $0
+endsnippet
+
+priority 200
+context "math()"
+snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int|varsigma|varepsilon)' "ln" rw
+\\`!p snip.rv = match.group(1)` $0
 endsnippet
 
 priority 300
 context "math()"
 snippet dint "integral" wA
 \int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
-endsnippet
-
-priority 200
-context "math()"
-snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|alpha|beta|gamma|delta|epsilon|varepsilon|theta|eta|zeta|iota|kappa|lambda|mu|nu|psi|omicron|pi|rho|sigma|varsigma|tau|upsilon|phi|xi|chi|omega|int)' "ln" rwA
-\\`!p snip.rv = match.group(1)`
 endsnippet
 
 priority 100
