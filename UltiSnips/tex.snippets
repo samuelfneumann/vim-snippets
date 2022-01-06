@@ -498,6 +498,11 @@ snippet ddots "ddots" iA
 endsnippet
 
 context "math()"
+snippet <- "gets" Ai
+\gets
+endsnippet
+
+context "math()"
 snippet => "implies" Ai
 \implies
 endsnippet
@@ -686,19 +691,19 @@ endsnippet
 priority 50
 context "math()"
 snippet '(?<![a-zA-Z\\])(psi)' "ln" rw
-\\`!p snip.rv = match.group(1)` $0
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
 priority 100
 context "math()"
 snippet '(?<![a-zA-Z\\])(sin|cos|arccot|cot|csc|ln|log|exp|star|perp|alpha|beta|gamma|delta|epsilon|theta|eta|zeta|iota|kappa|lambda|mu|nu|omicron|pi|rho|sigma|tau|upsilon|phi|xi|chi|omega)' "ln" rw
-\\`!p snip.rv = match.group(1)` $0
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
 priority 200
 context "math()"
 snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int|varsigma|varepsilon)' "ln" rw
-\\`!p snip.rv = match.group(1)` $0
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
 priority 300
