@@ -58,8 +58,9 @@ endsnippet
 # Conditionals
 priority 50
 snippet if "if conditional" w
-if ${1:${VISUAL:condition}}
-	$0
+if ${1:condition}:
+	${2:${VISUAL:pass}}
+$0
 end
 endsnippet
 
@@ -70,12 +71,13 @@ else
 endsnippet
 
 snippet elif "else if part of if statement" w
-elseif ${1:${VISUAL:condition}}
-	$0
+elseif ${1:condition}
+	${2:${VISUAL:pass}}
+$0
 endsnippet
 
 snippet tern "ternary operator" iA
-${1:${VISUAL:condition}} ? $2 : ${3:nothing}
+${1:condition} ? ${2:${VISUAL:nothing}} : ${3:nothing}
 endsnippet
 
 snippet iferr "if _ then error" w
@@ -87,21 +89,24 @@ endsnippet
 
 # Loops
 snippet for "for loop" w
-for ${1:i} = ${2:1:}${3:end}
-	$0
+for ${2:i} = ${3:1:}${4:end}
+	${1:${VISUAL:pass}}
 end
+$0
 endsnippet
 
 snippet forin "for in loop" w
-for ${1:i} ∈ ${2:container}
-	$0
+for ${2:i} ∈ ${3:container}
+	${1:${VISUAL:pass}}
 end
+$0
 endsnippet
 
 snippet while "while loop" w
-while ${1:${VISUAL:condition}}
-	$0
+while ${2:condition}
+	${1:${VISUAL:pass}}
 end
+$0
 endsnippet
 
 # Error handling
