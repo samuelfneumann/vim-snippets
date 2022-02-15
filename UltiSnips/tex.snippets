@@ -451,7 +451,13 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 `
 endsnippet
 
-# Math Script Fonts
+# Math symbols
+priority -500
+context "math()"
+snippet "([a-zA-Z]*\\)" "any" ri
+\\`!p snip.rv+=match.group(1)[0:-1]`
+endsnippet
+
 priority 100
 context "math()"
 snippet mbb "mathbb selection" i
@@ -543,10 +549,12 @@ snippet vect "vector" i
 \vect{${1:${VISUAL}}} $0
 endsnippet
 
+context "math()"
 snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
 
+context "math()"
 snippet bmat "bmat" iA
 \begin{bmatrix} $1 \end{bmatrix} $0
 endsnippet
@@ -749,12 +757,12 @@ snippet ~~ "~" iA
 endsnippet
 
 context "math()"
-snippet VV "V - or" iA
+snippet VV "V or" iA
 \vee
 endsnippet
 
-context"math()"
-snippet AA "/\ - and" iA
+context "math()"
+snippet AA "/\ and" iA
 \wedge
 endsnippet
 
