@@ -256,6 +256,11 @@ snippet bf "Bold"
 \textbf{$1} $0
 endsnippet
 
+context "math()"
+snippet bm "Bold math" i
+\bm{${1:${VISUAL}}} $0
+endsnippet
+
 # Italic text
 snippet ita "Italics"
 \textit{$1} $0
@@ -313,6 +318,7 @@ snippet template "Basic template" b
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{mathtools}
 \usepackage{textcomp}
 \usepackage{amsmath, amssymb}
 \usepackage[mathscr]{euscript}
@@ -331,6 +337,28 @@ snippet template "Basic template" b
 }
 
 \pdfsuppresswarningpagegroup=1
+
+% Custom operators
+\DeclareMathOperator*{\corr}{corr}
+\DeclareMathOperator*{\cov}{cov}
+\DeclareMathOperator*{\var}{var}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 
 \begin{document}
 	$0
@@ -561,7 +589,7 @@ endsnippet
 
 context "math()"
 snippet trans "transpose" iA
-^{\top}
+^{\top} $0
 endsnippet
 
 context "math()"
@@ -704,13 +732,37 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '(?<![a-zA-Z\\])(sin|cos|arccot|cot|csc|ln|log|exp|star|perp|alpha|beta|gamma|delta|epsilon|theta|eta|zeta|iota|kappa|lambda|mu|nu|omicron|pi|rho|sigma|tau|upsilon|phi|xi|chi|omega)' "ln" rw
+snippet '(?<![a-zA-Z\\])(sin|cos|arccos|cot|csc|ln|log|exp|star|perp)' "operators1" rw
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
 priority 200
 context "math()"
-snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int|varsigma|varepsilon)' "ln" rw
+snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int)' "operators2" rw
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<![a-zA-Z\\])(alpha|beta|gamma|delta|del)' "greek1" rw
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<![a-zA-Z\\])(varepsilon|epsilon|theta|eta|zeta|iota|kappa)' "greek2" rw
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<![a-zA-Z\\])(varsigma|sigma|tau|upsilon|phi|xi|chi|omega)' "greek3" rw
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<![a-zA-Z\\])(kappa|lambda|mu|nu|omicron|pi|rho)' "greek4" rw
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
