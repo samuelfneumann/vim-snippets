@@ -492,16 +492,46 @@ snippet mbb "mathbb selection" i
 \mathbb{${1:${VISUAL}}} $0
 endsnippet
 
+context "math()"
+snippet "([a-zA-Z0-9]+)bb" "mathbb previous" rwA
+\\mathbb{`!p snip.rv = match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "bb([a-zA-Z0-9])" "mathbb previous single" rwA
+\\mathbb{`!p snip.rv = match.group(1)`}
+endsnippet
+
 priority 100
 context "math()"
 snippet mcal "mathcal selection" i
 \mathcal{${1:${VISUAL}}} $0
 endsnippet
 
+context "math()"
+snippet "([a-zA-Z0-9]+)cal" "mathcal previous" rwA
+\\mathcal{`!p snip.rv = match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "scr([a-zA-Z0-9])" "mathcal previous single" rwA
+\\mathcal{`!p snip.rv = match.group(1)`}
+endsnippet
+
 priority 100
 context "math()"
 snippet mscr "mathscr selection" i
 \mathscr{${1:${VISUAL}}} $0
+endsnippet
+
+context "math()"
+snippet "([a-zA-Z0-9]+)scr" "mathscr previous" rwA
+\\mathscr{`!p snip.rv = match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "scr([a-zA-Z0-9])" "mathscr previous single" rwA
+\\mathscr{`!p snip.rv = match.group(1)`}
 endsnippet
 
 # Math Symbols
@@ -559,6 +589,11 @@ endsnippet
 context "math()"
 snippet != "not equals" iA
 \neq
+endsnippet
+
+context "math()"
+snippet ~= "approx" iA
+\approx
 endsnippet
 
 priority 100
@@ -633,12 +668,12 @@ endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{${1:t=0}}^{${2:\infty}} ${3:\gamma^{t} R_{t+1}}
+\sum_{${1:t=0}}${2:^{${3:\infty}}} ${4:\gamma^{t} R_{t+1}}
 endsnippet
 
 context "math()"
 snippet suml "sum limits" w
-\sum\limits_{t=${1:0}}^{${2:\infty}} ${3:\gamma^{t} R_{t+1}}
+\sum\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:\gamma^{t} R_{t+1}}
 endsnippet
 
 context "math()"
@@ -934,8 +969,8 @@ endsnippet
 
 priority 10
 context "math()"
-snippet "bar" "bar" riA
-\overline{$1}$0
+snippet "bar" "bar" ri
+\overline{$1}$
 endsnippet
 
 priority 100
