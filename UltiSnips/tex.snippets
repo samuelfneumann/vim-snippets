@@ -251,14 +251,12 @@ snippet glnl "New long glossary item" b
 }
 endsnippet
 
+##########################################
+# Text formatting
+##########################################
 # Bold text
 snippet bf "Bold"
 \textbf{${1:${VISUAL}}} $0
-endsnippet
-
-context "math()"
-snippet bm "Bold math" i
-\bm{${1:${VISUAL}}} $0
 endsnippet
 
 # Italic text
@@ -305,6 +303,7 @@ endsnippet
 snippet ft "Footnote"
 \footnote{${1:${VISUAL}}} $0
 endsnippet
+##########################################
 
 # ######################
 # Custom snippets below
@@ -382,7 +381,6 @@ snippet "math functions" "Mathematics functions" b
 \ExplSyntaxOff
 % ============================================================================
 endsnippet
-
 
 # Inline math mode
 snippet inm "Math" wA
@@ -479,7 +477,9 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
 `
 endsnippet
 
-# Math symbols
+###########################################################
+# Math text formatting
+###########################################################
 priority 0
 context "math()"
 snippet "([a-zA-Z]*\\)" "any" ri
@@ -533,8 +533,83 @@ context "math()"
 snippet "scr([a-zA-Z0-9])" "mathscr previous single" rwA
 \\mathscr{`!p snip.rv = match.group(1)`}
 endsnippet
+###########################################################
 
+###########################################################
+# Combining math symbols placed on top of other symbols
+###########################################################
+priority 100
+context "math()"
+snippet "([a-zA-Z]*)(~|tilde)" "widetilde above" riA
+`!p
+if len(match.group(1)) == 0:
+	snip.rv = "\\widetilde"
+elif len(snip.v.text) == 1 and snip.v.text:
+	snip.rv = "\\widetilde " + snip.v.text
+elif len(match.group(1)) == 1:
+	snip.rv = "\\widetilde " + match.group(1)
+elif snip.v.text:
+	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
+else:
+	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
+`
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z]*)hat" "hat above" riA
+`!p
+if len(match.group(1)) == 0:
+	snip.rv = "\\hat"
+elif len(snip.v.text) == 1 and snip.v.text:
+	snip.rv = "\\hat " + snip.v.text
+elif len(match.group(1)) == 1:
+	snip.rv = "\\hat " + match.group(1)
+elif snip.v.text:
+	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
+else:
+	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
+`
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z]*)vec" "vector overright arrow" riA
+`!p
+if len(match.group(1)) == 0:
+	snip.rv = "\\vec"
+elif len(snip.v.text) == 1 and snip.v.text:
+	snip.rv = "\\vec " + snip.v.text
+elif len(match.group(1)) == 1:
+	snip.rv = "\\vec " + match.group(1)
+elif snip.v.text:
+	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
+else:
+	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
+`
+endsnippet
+
+priority 100
+context "math()"
+snippet "([a-zA-Z]*)bm" "vector bold" riA
+`!p
+if len(match.group(1)) == 0:
+	snip.rv = "\\bm"
+elif len(snip.v.text) == 1 and snip.v.text:
+	snip.rv = "\\bm " + snip.v.text
+elif len(match.group(1)) == 1:
+	snip.rv = "\\bm " + match.group(1)
+elif snip.v.text:
+	snip.rv = "\\bm{" + snip.v.text + "}"
+else:
+	snip.rv = "\\bm{" + match.group(1) + "}"
+`
+endsnippet
+####################################################
+
+###########################################################
 # Math Symbols
+###########################################################
 priority 100
 context "math()"
 snippet ... "ldots" iA
@@ -596,26 +671,6 @@ snippet ~= "approx" iA
 \approx
 endsnippet
 
-priority 100
-context "math()"
-snippet "([a-zA-Z]*)vec" "vector overright arrow" riA
-`!p
-if len(snip.v.text) == 1 and snip.v.text:
-	snip.rv = "\\vec " + snip.v.text
-elif len(match.group(1)) == 1:
-	snip.rv = "\\vec " + match.group(1)
-elif snip.v.text:
-	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
-else:
-	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
-`
-endsnippet
-
-context "math()"
-snippet vect "vector" i
-\vect{${1:${VISUAL}}} $0
-endsnippet
-
 context "math()"
 snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
@@ -668,12 +723,12 @@ endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{${1:t=0}}${2:^{${3:\infty}}} ${4:\gamma^{t} R_{t+1}}
+\sum_{${1:t=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
 context "math()"
 snippet suml "sum limits" w
-\sum\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:\gamma^{t} R_{t+1}}
+\sum\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:$${VISUAL}}
 endsnippet
 
 context "math()"
@@ -777,7 +832,7 @@ endsnippet
 
 priority 100
 context "math()"
-snippet del "del" wA
+snippet del "del" w
 \partial $0
 endsnippet
 
@@ -814,7 +869,13 @@ endsnippet
 priority 300
 context "math()"
 snippet dint "integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
+\ints_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}} $0
+endsnippet
+
+priority 300
+context "math()"
+snippet dintl "integral" wA
+\int\limits_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}} $0
 endsnippet
 
 priority 100
@@ -823,7 +884,9 @@ snippet -> "to" iA
 \to
 endsnippet
 
-snippet to "to" w
+priority 100
+context "math()"
+snippet to "to" iA
 \to
 endsnippet
 
@@ -979,18 +1042,6 @@ snippet "([a-zA-Z])bar" "bar" riA
 \overline{`!p snip.rv=match.group(1)`}
 endsnippet
 
-priority 10
-context "math()"
-snippet "hat" "hat" riA
-\hat{$1}$0
-endsnippet
-
-priority 100
-context "math()"
-snippet "([a-zA-Z])hat" "hat" riA
-\hat{`!p snip.rv=match.group(1)`}
-endsnippet
-
 context "math()"
 snippet "\((.)" "sample in batch" ri
 ^{(`!p snip.rv=match.group(1)`)}
@@ -1005,9 +1056,12 @@ context "math()"
 snippet "\^(.)" "power" ri
 ^{`!p snip.rv=match.group(1)`}
 endsnippet
+###########################################################
 
 
+###########################################################
 # References
+###########################################################
 snippet reffig "reference to a figure" iA
 ${1:Figure}~\\ref{fig:$2} $0
 endsnippet
@@ -1055,8 +1109,11 @@ endsnippet
 snippet lsec "section label" iA
 \label{sec:$1} $0
 endsnippet
+###########################################################
 
+###########################################################
 #Citations
+###########################################################
 snippet citen "citation number" w
 	\\citen{${1}} $0
 endsnippet
@@ -1093,4 +1150,4 @@ snippet citey "citeyear" w
 	\\citeyear{${1}} $0
 endsnippet
 
-#vim:ft=snippets:
+###########################################################
