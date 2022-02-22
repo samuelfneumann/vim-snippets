@@ -100,6 +100,10 @@ snippet fig "Figure environment" b
 \end{figure}
 endsnippet
 
+##########################################
+# Lists
+##########################################
+
 snippet enum "Enumerate" b
 \begin{enumerate}
 	\item $0
@@ -122,6 +126,12 @@ context "env('itemize')"
 snippet * "Individual item" wA
 \item $0
 endsnippet
+
+context "env('enumerate')"
+snippet * "Individual item" wA
+\item $0
+endsnippet
+##########################################
 
 snippet part "Part" b
 \part{${1:part name}}%
@@ -364,6 +374,43 @@ snippet template "Basic template" b
 \end{document}
 endsnippet
 
+snippet expandedsections "subsubsubsections and subparagraphs" w
+% Subsubsubsections
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+	{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+	{3.25ex \@plus1ex \@minus.2ex}%
+	{-1em}%
+	{\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+	{3.25ex \@plus1ex \@minus .2ex}%
+	{-1em}%
+	{\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+endsnippet
+
 snippet "math functions" "Mathematics functions" b
 \usepackage{xparse}
 
@@ -540,18 +587,12 @@ endsnippet
 ###########################################################
 priority 100
 context "math()"
-snippet "([a-zA-Z]*)(~|tilde)" "widetilde above" riA
+snippet "([a-zA-Z])(~|tilde)" "widetilde above" riA
 `!p
-if len(match.group(1)) == 0:
-	snip.rv = "\\widetilde"
-elif len(snip.v.text) == 1 and snip.v.text:
+if len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\widetilde " + snip.v.text
 elif len(match.group(1)) == 1:
 	snip.rv = "\\widetilde " + match.group(1)
-elif snip.v.text:
-	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
-else:
-	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
 `
 endsnippet
 
@@ -659,6 +700,12 @@ endsnippet
 context "math()"
 snippet .= "dot equals" iA
 \doteq
+endsnippet
+
+priority 100
+context "math()"
+snippet 0( "proportional to" iA
+\propto
 endsnippet
 
 context "math()"
@@ -884,7 +931,7 @@ snippet -> "to" iA
 \to
 endsnippet
 
-priority 100
+priority 50
 context "math()"
 snippet to "to" iA
 \to
