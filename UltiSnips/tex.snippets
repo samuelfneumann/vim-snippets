@@ -164,28 +164,42 @@ endsnippet
 
 snippet sub "Subsection"
 \subsection{${1:${VISUAL:subsection name}}}%
-\label{sub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{ssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 
 $0
 endsnippet
 
 snippet sub* "Subsection"
 \subsection*{${1:${VISUAL:subsection name}}}%
-\label{sub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{ssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 
 ${0}
 endsnippet
 
 snippet ssub "Subsubsection"
 \subsubsection{${1:${VISUAL:subsubsection name}}}%
-\label{ssub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{sssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 
 $0
 endsnippet
 
 snippet ssub* "Subsubsection"
 \subsubsection*{${1:${VISUAL:subsubsection name}}}%
-\label{ssub:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{sssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+
+${0}
+endsnippet
+
+snippet sssub "Subsubsubsection"
+\subsubsubsection{${1:${VISUAL:subsection name}}}%
+\label{ssssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+
+$0
+endsnippet
+
+snippet sssub* "Subsubsection"
+\subsubsubsection*{${1:${VISUAL:subsubsection name}}}%
+\label{ssssec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 
 ${0}
 endsnippet
@@ -587,12 +601,16 @@ endsnippet
 ###########################################################
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z])(~|tilde)" "widetilde above" riA
+snippet "(\\?[a-zA-Z]+)(~|tilde)" "widetilde above" rwA
 `!p
 if len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\widetilde " + snip.v.text
 elif len(match.group(1)) == 1:
 	snip.rv = "\\widetilde " + match.group(1)
+elif match.group(1)[0] == "\\":
+	snip.rv = "\\widetilde " + match.group(1)
+else:
+	snip.rv = match.group(1) + match.group(2)
 `
 endsnippet
 
@@ -623,6 +641,8 @@ elif len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\hat " + snip.v.text
 elif len(match.group(1)) == 1:
 	snip.rv = "\\hat " + match.group(1)
+elif match.group(1)[0] == "\\":
+	snip.rv = "\\hat " + match.group(1)
 elif snip.v.text:
 	snip.rv = "\\hat{" + snip.v.text + "}"
 else:
@@ -639,6 +659,8 @@ if len(match.group(1)) == 0:
 elif len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\vec " + snip.v.text
 elif len(match.group(1)) == 1:
+	snip.rv = "\\vec " + match.group(1)
+elif match.group(1)[0] == "\\":
 	snip.rv = "\\vec " + match.group(1)
 elif snip.v.text:
 	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
@@ -783,6 +805,16 @@ endsnippet
 context "math()"
 snippet lr< "leftangle rightangle" iA
 \left<${1:${VISUAL}} \right>$0
+endsnippet
+
+context "math()"
+snippet prod "prod" w
+\prod_{${1:t=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
+endsnippet
+
+context "math()"
+snippet prodl "prod limits" w
+\prod\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:$${VISUAL}}
 endsnippet
 
 context "math()"
@@ -932,14 +964,14 @@ endsnippet
 
 priority 300
 context "math()"
-snippet dint "integral" wA
-\int_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}} $0
+snippet dint "integral" w
+\int_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}}
 endsnippet
 
 priority 300
 context "math()"
-snippet dintl "integral" wA
-\int\limits_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}} $0
+snippet dintl "integral" w
+\int\limits_{${1:-\infty}}${2:^{${3:\infty}}} ${3:${VISUAL}}
 endsnippet
 
 priority 100
