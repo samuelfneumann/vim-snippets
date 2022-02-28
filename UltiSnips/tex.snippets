@@ -679,6 +679,8 @@ elif len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\bm " + snip.v.text
 elif len(match.group(1)) == 1:
 	snip.rv = "\\bm " + match.group(1)
+elif match.group(1)[0] == "\\":
+	snip.rv = "\\bm " + match.group(1)
 elif snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
 else:
@@ -814,7 +816,7 @@ endsnippet
 
 context "math()"
 snippet prodl "prod limits" w
-\prod\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:$${VISUAL}}
+\prod\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
 context "math()"
@@ -824,7 +826,7 @@ endsnippet
 
 context "math()"
 snippet suml "sum limits" w
-\sum\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:$${VISUAL}}
+\sum\limits_{${1:t=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
 context "math()"
