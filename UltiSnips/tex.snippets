@@ -601,30 +601,20 @@ endsnippet
 ###########################################################
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]+)(~|tilde)" "widetilde above" rwA
+snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)(~|tilde)" "widetilde above" rwA
 `!p
-if len(snip.v.text) == 1 and snip.v.text:
-	snip.rv = "\\widetilde " + snip.v.text
-elif len(match.group(1)) == 1:
-	snip.rv = "\\widetilde " + match.group(1)
-elif match.group(1)[0] == "\\":
-	snip.rv = "\\widetilde " + match.group(1)
+if snip.v.text:
+	snip.rv = "\\widetilde{" + snip.v.text + "}"
 else:
-	snip.rv = match.group(1) + match.group(2)
+	snip.rv = "\\widetilde{" + match.group(1) + "}"
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*)bar" "bar above" riA
+snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)bar" "bar above" riA
 `!p
-if len(match.group(1)) == 0:
-	snip.rv = "\\overline"
-elif len(snip.v.text) == 1:
-	snip.rv = "\\overline " + snip.v.text
-elif len(match.group(1)) == 1:
-	snip.rv = "\\overline " + match.group(1)
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\overline{" + snip.v.text + "}"
 else:
 	snip.rv = "\\overline{" + match.group(1) + "}"
@@ -633,17 +623,9 @@ endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*)hat" "hat above" riA
+snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)hat" "hat above" riA
 `!p
-if len(match.group(1)) == 0:
-	snip.rv = "\\hat"
-elif len(snip.v.text) == 1 and snip.v.text:
-	snip.rv = "\\hat " + snip.v.text
-elif len(match.group(1)) == 1:
-	snip.rv = "\\hat " + match.group(1)
-elif match.group(1)[0] == "\\":
-	snip.rv = "\\hat " + match.group(1)
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\hat{" + snip.v.text + "}"
 else:
 	snip.rv = "\\hat{" + match.group(1) + "}"
@@ -652,16 +634,16 @@ endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*)vec" "vector overright arrow" riA
+snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)vec" "vector overright arrow" riA
 `!p
 if len(match.group(1)) == 0:
 	snip.rv = "\\vec"
 elif len(snip.v.text) == 1 and snip.v.text:
-	snip.rv = "\\vec " + snip.v.text
+	snip.rv = "\\vec{" + snip.v.text + "}"
 elif len(match.group(1)) == 1:
-	snip.rv = "\\vec " + match.group(1)
+	snip.rv = "\\vec{" + match.group(1) +"}"
 elif match.group(1)[0] == "\\":
-	snip.rv = "\\vec " + match.group(1)
+	snip.rv = "\\vec{" + match.group(1) + "}"
 elif snip.v.text:
 	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
 else:
@@ -671,17 +653,9 @@ endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*)bm" "vector bold" riA
+snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)bm" "vector bold" riA
 `!p
-if len(match.group(1)) == 0:
-	snip.rv = "\\bm"
-elif len(snip.v.text) == 1 and snip.v.text:
-	snip.rv = "\\bm " + snip.v.text
-elif len(match.group(1)) == 1:
-	snip.rv = "\\bm " + match.group(1)
-elif match.group(1)[0] == "\\":
-	snip.rv = "\\bm " + match.group(1)
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
 else:
 	snip.rv = "\\bm{" + match.group(1) + "}"
