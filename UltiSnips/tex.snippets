@@ -472,12 +472,12 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 context "math()"
-snippet _ "subscript" i
+snippet _ "subscript" iA
 _{$1}$0
 endsnippet
 
 context "math()"
-snippet ^ "superscript" i
+snippet ^ "superscript" iA
 ^{$1}$0
 endsnippet
 
@@ -898,8 +898,14 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '(?<![a-zA-Z\\])(sin|cos|arccos|cot|csc|ln|log|exp|star|perp|partial)' "operators1" rw
+snippet '(?<![a-zA-Z\\])(max|min|argmin|argmax)' "operators min/max" rwA
 \\`!p snip.rv = match.group(1)`
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<![a-zA-Z\\])(sin|cos|arccos|cot|csc|ln|log|exp|star|perp|partial)' "operators1" rwA
+\\`!p snip.rv = match.group(1)` $0
 endsnippet
 
 priority 100
@@ -910,8 +916,8 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int)' "operators2" rw
-\\`!p snip.rv = match.group(1)`
+snippet '(?<![a-zA-Z\\])(arcsin|arccos|arctan|arccot|arccsc|arcsec|int)' "operators2" rwA
+\\`!p snip.rv = match.group(1)` $0
 endsnippet
 
 priority 100
