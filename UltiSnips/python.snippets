@@ -66,9 +66,11 @@ DOUBLE_QUOTES = '"'
 class Arg(object):
 	def __init__(self, arg):
 		self.arg = arg
+		name_and_default = arg.split("=")
 		name_and_type = arg.split('=')[0].split(':')
 		self.name = name_and_type[0].strip()
 		self.type = name_and_type[1].strip() if len(name_and_type) == 2 else None
+		self.default = name_and_default[1].strip() if len(name_and_default) == 2 else None
 
 	def __str__(self):
 		return self.name
@@ -169,7 +171,10 @@ def format_arg(arg, style):
 	elif style == JEDI:
 		return ":type %s: TODO" % arg
 	elif style == NUMPY:
-		return "%s : TODO" % arg
+		if not arg.type:
+			return "%s : TODO" % arg
+		else:
+			return f"{arg.name} : {arg.type}"
 
 
 def format_return(style):
@@ -179,6 +184,8 @@ def format_return(style):
 		return ":returns: TODO"
 	elif style == GOOGLE:
 		return "Returns: TODO"
+	elif style == NUMPY:
+		return "Returns"
 
 
 def write_docstring_args(args, snip):
@@ -745,6 +752,40 @@ snippet pmdoc "pocoo style module doc string" b
 	:license: ${3:LICENSE_NAME}, see LICENSE for more details.
 """
 $0
+endsnippet
+
+
+snippet "\s*def ([a-zA-Z_])\((.*)\):" "documentation" r
+`!p snip.rv = snip.mkline("def " + match.group(1)) + "(" + match.group(2) + \
+	"):"`
+`!p
+snip.shift(amount=1)
+name = match.group(1)
+
+snip.rv = snip.mkline(triple_quotes(snip))
+snip += name + "\n"
+snip += "Parameters"
+snip += "----------"
+
+args = get_args(match.group(2))
+# args = match.group(2).split(",")
+# args = list(map(lambda x: x.strip(), args))
+
+for arg in args:
+	end = ""
+	if arg.default:
+		end += ", by default " + str(arg.default)
+	end += "\n"
+	snip += format_arg(arg, get_style(snip))
+	snip.rv += end
+
+snip += format_return(get_style(snip))
+snip += "-------"
+snip += "any"
+snip += "\tTODO\n"
+
+snip.rv += snip.mkline(triple_quotes(snip))
+`
 endsnippet
 
 # vim:ft=snippets:
