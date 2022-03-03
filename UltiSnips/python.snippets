@@ -755,7 +755,7 @@ $0
 endsnippet
 
 
-snippet "\s*def ([a-zA-Z_])\((.*)\):" "documentation" r
+snippet "\s*def ([a-zA-Z_]+)\((.*)\):" "documentation" r
 `!p snip.rv = snip.mkline("def " + match.group(1)) + "(" + match.group(2) + \
 	"):"`
 `!p
