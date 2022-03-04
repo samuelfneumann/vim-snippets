@@ -601,115 +601,185 @@ endsnippet
 ###########################################################
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)(~|tilde)" "tilde" ri
+snippet "([^\s$]*)(~|tilde)" "widetilde above" rwA
 `!p
-if match.group(2) != None and len(match.group(2)) > 0:
-	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
-		text = match.group(1)
-		end = match.group(2)
-else:
-	text = match.group(1)
-	end = ""
-
-if len(match.group(0)) == 0:
-	snip.rv = "\\widetilde"
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\widetilde{" + snip.v.text + "}"
+elif len(match.group(1)) == 0:
+	snip.rv = "\\widetilde"
 else:
-	snip.rv = "\\widetilde{" + text + "}" + end
+	snip.rv = "\\widetilde{" + match.group(1) + "}"
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bar" "bar" ri
+snippet "([^\s$]*)bar" "bar above" riA
 `!p
-if match.group(2) != None and len(match.group(2)) > 0:
-	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
-		text = match.group(1)
-		end = match.group(2)
-else:
-	text = match.group(1)
-	end = ""
-
-if len(match.group(0)) == 0:
-	snip.rv = "\\overline"
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\overline{" + snip.v.text + "}"
+elif len(match.group(1)) == 0:
+	snip.rv = "\\overline"
 else:
-	snip.rv = "\\overline{" + text + "}" + end
+	snip.rv = "\\overline{" + match.group(1) + "}"
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)hat" "hat" ri
+snippet "([^\s$]*)hat" "hat above" riA
 `!p
-if match.group(2) != None and len(match.group(2)) > 0:
-	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
-		text = match.group(1)
-		end = match.group(2)
-else:
-	text = match.group(1)
-	end = ""
-
-if len(match.group(0)) == 0:
-	snip.rv = "\\hat"
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\hat{" + snip.v.text + "}"
+elif len(match.group(1)) == 0:
+	snip.rv = "\\hat"
 else:
-	snip.rv = "\\hat{" + text + "}" + end
+	snip.rv = "\\hat{" + match.group(1) + "}"
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)vec" "vector arrow" ri
+snippet "([^\s$]*)vec" "vector overright arrow" riA
 `!p
-if match.group(2) != None and len(match.group(2)) > 0:
-	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
-		text = match.group(1)
-		end = match.group(2)
-else:
-	text = match.group(1)
-	end = ""
-
-if len(match.group(0)) == 0:
+if len(match.group(1)) == 0:
 	snip.rv = "\\vec"
-elif len(match.group(1)) == 1:
-	snip.rv = "\\vec{" + text + "}" + end
-elif match.group(1)[0] == "\\":
-	snip.rv = "\\vec{" + text + "}" + end
 elif len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\vec{" + snip.v.text + "}"
+elif len(match.group(1)) == 1:
+	snip.rv = "\\vec{" + match.group(1) +"}"
+elif match.group(1)[0] == "\\":
+	snip.rv = "\\vec{" + match.group(1) + "}"
 elif snip.v.text:
 	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
 else:
-	snip.rv = "\\overrightarrow{" + text + "}" + end
+	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bm" "bold vector" ri
+snippet "([^\s$]*)bm" "vector bold" riA
 `!p
-if match.group(2) != None and len(match.group(2)) > 0:
-	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
-		text = match.group(1)
-		end = match.group(2)
-else:
-	text = match.group(1)
-	end = ""
-
-if len(match.group(0)) == 0:
-	snip.rv = "\\bm"
-elif snip.v.text:
+if snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
+if len(match.group(1)) == 0:
+	snip.rv = "\\bm"
 else:
-	snip.rv = "\\bm{" + text + "}" + end
+	snip.rv = "\\bm{" + match.group(1) + "}"
 `
 endsnippet
 ####################################################
+
+# ###########################################################
+# # Combining math symbols placed on top of other symbols
+# ###########################################################
+# priority 100
+# context "math()"
+# snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)(~|tilde)" "tilde" ri
+# `!p
+# if match.group(2) != None and len(match.group(2)) > 0:
+#     if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+#         text = match.group(1)
+#         end = match.group(2)
+# else:
+#     text = match.group(1)
+#     end = ""
+# if len(match.group(0)) == 0:
+#     snip.rv = "\\widetilde"
+# elif snip.v.text:
+#     snip.rv = "\\widetilde{" + snip.v.text + "}"
+# else:
+#     snip.rv = "\\widetilde{" + text + "}" + end
+# `
+# endsnippet
+
+# priority 100
+# context "math()"
+# snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bar" "bar" ri
+# `!p
+# if match.group(2) != None and len(match.group(2)) > 0:
+#     if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+#         text = match.group(1)
+#         end = match.group(2)
+# else:
+#     text = match.group(1)
+#     end = ""
+# if len(match.group(0)) == 0:
+#     snip.rv = "\\overline"
+# elif snip.v.text:
+#     snip.rv = "\\overline{" + snip.v.text + "}"
+# else:
+#     snip.rv = "\\overline{" + text + "}" + end
+# `
+# endsnippet
+
+# priority 100
+# context "math()"
+# snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)hat" "hat" ri
+# `!p
+# if match.group(2) != None and len(match.group(2)) > 0:
+#     if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+#         text = match.group(1)
+#         end = match.group(2)
+# else:
+#     text = match.group(1)
+#     end = ""
+# if len(match.group(0)) == 0:
+#     snip.rv = "\\hat"
+# elif snip.v.text:
+#     snip.rv = "\\hat{" + snip.v.text + "}"
+# else:
+#     snip.rv = "\\hat{" + text + "}" + end
+# `
+# endsnippet
+
+# priority 100
+# context "math()"
+# snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)vec" "vector arrow" ri
+# `!p
+# if match.group(2) != None and len(match.group(2)) > 0:
+#     if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+#         text = match.group(1)
+#         end = match.group(2)
+# else:
+#     text = match.group(1)
+#     end = ""
+# if len(match.group(0)) == 0:
+#     snip.rv = "\\vec"
+# elif len(match.group(1)) == 1:
+#     snip.rv = "\\vec{" + text + "}" + end
+# elif match.group(1)[0] == "\\":
+#     snip.rv = "\\vec{" + text + "}" + end
+# elif len(snip.v.text) == 1 and snip.v.text:
+#     snip.rv = "\\vec{" + snip.v.text + "}"
+# elif snip.v.text:
+#     snip.rv = "\\overrightarrow{" + snip.v.text + "}"
+# else:
+#     snip.rv = "\\overrightarrow{" + text + "}" + end
+# `
+# endsnippet
+
+# priority 100
+# context "math()"
+# snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bm" "bold vector" ri
+# `!p
+# if match.group(2) != None and len(match.group(2)) > 0:
+#     if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+#         text = match.group(1)
+#         end = match.group(2)
+# else:
+#     text = match.group(1)
+#     end = ""
+# if len(match.group(0)) == 0:
+#     snip.rv = "\\bm"
+# elif snip.v.text:
+#     snip.rv = "\\bm{" + snip.v.text + "}"
+# else:
+#     snip.rv = "\\bm{" + text + "}" + end
+# `
+# endsnippet
+# ####################################################
 
 ###########################################################
 # Math Symbols
