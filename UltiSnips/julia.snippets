@@ -3,9 +3,9 @@ snippet #! "shebang" iA
 endsnippet
 
 # Documentation
-snippet docf "function documentation" b
-# Press <tab> at end of function to insert docstring
-snippet "function (.*)$" "function docstring" ri
+# snippet docf "function documentation" b
+# # Press <tab> at end of function to insert docstring
+snippet "function (.*\(.*\))(:{2}.*)?$" "function docstring" ri
 """
 `!p
 text = match.group(1).split(",")
@@ -27,15 +27,18 @@ for i, word in enumerate(text):
 if added:
 	out = out[:-1] + "])"
 
-snip.rv = "\t" + out + "\n"
+if match.group(2):
+	snip.rv = "\t" + out + match.group(2) + "\n"
+else:
+	snip.rv = "\t" + out + "\n"
 `
 ${1:description}
 """
-function `!p snip.rv=match.group(1)`
+function `!p snip.rv=match.group(1) + ("" if not match.group(2) else match.group(2))`
 endsnippet
 
 # Press <tab> at end of module or struct to insert docstring
-snippet "(struct|module) (.*)$" "struct docstring" ri
+snippet "(mutable struct|struct|module) (.*)$" "struct docstring" ri
 """
 `!p
 snip.rv = "\t" + match.group(2)
@@ -45,6 +48,19 @@ ${1:description}
 """
 `!p snip.rv=match.group(1) + " " + match.group(2)`
 endsnippet
+
+# Press <tab> at end of an abstract type docstring
+snippet "(abstract type) (.*) (end)$" "struct docstring" ri
+"""
+`!p
+snip.rv = "\t" + match.group(2)
+`
+
+${1:description}
+"""
+`!p snip.rv=match.group(1) + " " + match.group(2) + " " + match.group(3)`
+endsnippet
+
 
 
 # Ignore some snippets in comments
@@ -128,7 +144,7 @@ endsnippet
 
 # Functions
 snippet f "function definition" w
-function ${1:${VISUAL:name}}(${2:args...})
+function ${1:${VISUAL:name}}(${2:args...})$3
 	$0
 end
 endsnippet
