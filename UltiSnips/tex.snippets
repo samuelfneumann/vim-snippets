@@ -463,7 +463,7 @@ endsnippet
 # Sub- and super-scripts change a1 -> a_{1} and a_12 -> a_{12}
 context "math()"
 snippet '([A-Za-z])(\d)' "auto subscript" wrA
-`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
 endsnippet
 
 context "math()"
@@ -601,64 +601,112 @@ endsnippet
 ###########################################################
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)(~|tilde)" "widetilde above" rwA
+snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)(~|tilde)" "tilde" ri
 `!p
-if snip.v.text:
+if match.group(2) != None and len(match.group(2)) > 0:
+	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+		text = match.group(1)
+		end = match.group(2)
+else:
+	text = match.group(1)
+	end = ""
+
+if len(match.group(0)) == 0:
+	snip.rv = "\\widetilde"
+elif snip.v.text:
 	snip.rv = "\\widetilde{" + snip.v.text + "}"
 else:
-	snip.rv = "\\widetilde{" + match.group(1) + "}"
+	snip.rv = "\\widetilde{" + text + "}" + end
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)bar" "bar above" riA
+snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bar" "bar" ri
 `!p
-if snip.v.text:
+if match.group(2) != None and len(match.group(2)) > 0:
+	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+		text = match.group(1)
+		end = match.group(2)
+else:
+	text = match.group(1)
+	end = ""
+
+if len(match.group(0)) == 0:
+	snip.rv = "\\overline"
+elif snip.v.text:
 	snip.rv = "\\overline{" + snip.v.text + "}"
 else:
-	snip.rv = "\\overline{" + match.group(1) + "}"
+	snip.rv = "\\overline{" + text + "}" + end
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)hat" "hat above" riA
+snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)hat" "hat" ri
 `!p
-if snip.v.text:
+if match.group(2) != None and len(match.group(2)) > 0:
+	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+		text = match.group(1)
+		end = match.group(2)
+else:
+	text = match.group(1)
+	end = ""
+
+if len(match.group(0)) == 0:
+	snip.rv = "\\hat"
+elif snip.v.text:
 	snip.rv = "\\hat{" + snip.v.text + "}"
 else:
-	snip.rv = "\\hat{" + match.group(1) + "}"
+	snip.rv = "\\hat{" + text + "}" + end
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)vec" "vector overright arrow" riA
+snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)vec" "vector arrow" ri
 `!p
-if len(match.group(1)) == 0:
+if match.group(2) != None and len(match.group(2)) > 0:
+	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+		text = match.group(1)
+		end = match.group(2)
+else:
+	text = match.group(1)
+	end = ""
+
+if len(match.group(0)) == 0:
 	snip.rv = "\\vec"
+elif len(match.group(1)) == 1:
+	snip.rv = "\\vec{" + text + "}" + end
+elif match.group(1)[0] == "\\":
+	snip.rv = "\\vec{" + text + "}" + end
 elif len(snip.v.text) == 1 and snip.v.text:
 	snip.rv = "\\vec{" + snip.v.text + "}"
-elif len(match.group(1)) == 1:
-	snip.rv = "\\vec{" + match.group(1) +"}"
-elif match.group(1)[0] == "\\":
-	snip.rv = "\\vec{" + match.group(1) + "}"
 elif snip.v.text:
 	snip.rv = "\\overrightarrow{" + snip.v.text + "}"
 else:
-	snip.rv = "\\overrightarrow{" + match.group(1) + "}"
+	snip.rv = "\\overrightarrow{" + text + "}" + end
 `
 endsnippet
 
 priority 100
 context "math()"
-snippet "(\\?[a-zA-Z]*\{?[a-zA-Z{}\\]+\}?)bm" "vector bold" riA
+snippet "(\\?[a-zA-Z0-9]*)(([_^]?\{?[-a-zA-Z0-9{}\\]+\}?)*)bm" "bold vector" ri
 `!p
-if snip.v.text:
+if match.group(2) != None and len(match.group(2)) > 0:
+	if match.group(2)[0] == "_" or match.group(2)[0] == "^":
+		text = match.group(1)
+		end = match.group(2)
+else:
+	text = match.group(1)
+	end = ""
+
+if len(match.group(0)) == 0:
+	snip.rv = "\\bm"
+elif snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
 else:
-	snip.rv = "\\bm{" + match.group(1) + "}"
+	snip.rv = "\\bm{" + text + "}" + end
 `
 endsnippet
 ####################################################
@@ -745,7 +793,7 @@ endsnippet
 
 context "math()"
 snippet trans "transpose" iA
-^{\top} $0
+^{\top}$0
 endsnippet
 
 context "math()"
@@ -1020,7 +1068,7 @@ snippet notin "not in" iA
 endsnippet
 
 context "math()"
-snippet in "in" wA
+snippet inn "in" wA
 \in
 endsnippet
 
