@@ -756,7 +756,7 @@ $0
 endsnippet
 
 
-snippet "(\s*)def ([a-zA-Z_]+)\((.*)\):" "documentation" r
+snippet "(\s*)def ([a-zA-Z_]+)\((.*)\):" "function docstring" r
 `!p
 if match.group(1):
 	spaces_per_tab = 4
@@ -772,6 +772,24 @@ if match.group(1):
 	snip.shift(len(match.group(1)) // spaces_per_tab)
 
 write_function_docstring(["", "", match.group(3)], snip)
+`
+endsnippet
+
+snippet "(\s*)class ([a-zA-Z_]+)(.*):" "class docstring" r
+`!p
+if match.group(1):
+	spaces_per_tab = 4
+	snip.shift(len(match.group(1)) // spaces_per_tab)
+if match.group(3):
+	end = match.group(3) + ":"
+else:
+	end = ":"
+snip.rv = snip.mkline("class " + match.group(2)) + end
+
+snip.shift(1)
+snip += triple_quotes(snip)
+snip += "TODO"
+snip += triple_quotes(snip)
 `
 endsnippet
 
