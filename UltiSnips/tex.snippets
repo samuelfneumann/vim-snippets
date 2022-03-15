@@ -655,9 +655,22 @@ else:
 `
 endsnippet
 
+priority 101
+context "math()"
+snippet "bm[^{]([^\s$]*) " "vector bold" rA
+`!p
+if snip.v.text:
+	snip.rv = "\\bm{" + snip.v.text + "}"
+if len(match.group(1)) == 0:
+	snip.rv = "\\bm"
+else:
+	snip.rv = "\\bm{" + match.group(1) + "}"
+`
+endsnippet
+
 priority 100
 context "math()"
-snippet "([^\s$]*)bm" "vector bold" riA
+snippet "([^\s$]*)bm" "vector bold" rA
 `!p
 if snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
@@ -1151,7 +1164,7 @@ snippet cup "cup" iA
 endsnippet
 
 context "math()"
-snippet cc "subset" iA
+snippet cc "subset" wA
 \subset
 endsnippet
 
@@ -1171,7 +1184,7 @@ snippet QQ "rational" iA
 endsnippet
 
 context "math()"
-snippet CC "complex" iA
+snippet CC "complex" wA
 \mathbb{C}
 endsnippet
 
