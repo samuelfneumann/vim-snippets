@@ -344,7 +344,7 @@ snippet template "Basic template" b
 \usepackage{amsmath, amssymb}
 \usepackage[mathscr]{euscript}
 \usepackage[margin=1in]{geometry}
-
+\usepackage{hyperref}
 
 % figure support
 \usepackage{import}
@@ -359,12 +359,16 @@ snippet template "Basic template" b
 
 \pdfsuppresswarningpagegroup=1
 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Custom operators
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \DeclareMathOperator*{\corr}{corr}
 \DeclareMathOperator*{\cov}{cov}
 \DeclareMathOperator*{\var}{var}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+% Norm and Abs
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
 % Swap the definition of \abs* and \norm*, so that \abs
