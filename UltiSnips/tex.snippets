@@ -661,11 +661,11 @@ endsnippet
 
 priority 101
 context "math()"
-snippet "bm[^{]([^\s$]*) " "vector bold" rA
+snippet "bm([^{\s$]+)" "vector bold" r
 `!p
 if snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
-if len(match.group(1)) == 0:
+if len(match.group(0)) == 0:
 	snip.rv = "\\bm"
 else:
 	snip.rv = "\\bm{" + match.group(1) + "}"
@@ -674,7 +674,7 @@ endsnippet
 
 priority 100
 context "math()"
-snippet "([^\s$]*)bm" "vector bold" rA
+snippet "([^\s$]+)bm" "vector bold" r
 `!p
 if snip.v.text:
 	snip.rv = "\\bm{" + snip.v.text + "}"
@@ -1286,7 +1286,7 @@ ${1:Page}~\\pageref{$2} $0
 endsnippet
 
 snippet refalg "reference to an algorithm" iA
-${1:Algorithm}~\\pageref{$2} $0
+${1:Algorithm}~\\ref{$2} $0
 endsnippet
 
 snippet rref "generic reference" i
